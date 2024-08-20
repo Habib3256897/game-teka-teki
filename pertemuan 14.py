@@ -1,37 +1,32 @@
-graph = dict()
-graph['A'] = ['B', 'C']
-graph['B'] = ['E', 'D', 'A']
-graph['C']= ['A', 'G', 'F']
-graph['D'] = ['B']
-graph['E'] = ['H', 'B']
-graph['F'] = ['E', 'C', 'G']
-graph['G'] = ['F', 'C']
-graph['H'] = ['E']
+def domba(asal,seberang):
+    print(f"Daerah Asal : {asal}")
+    if len(seberang) > 0:
+        print(f"Seberang Sungai : {seberang}")
+    perahu = input("\nNaikkan 1 hewan ke perahu : ")
+    print(f"Perahu : {[perahu]}")
+    print("Perahu menuju ke seberang sungai...")
+    asal.remove(perahu)
+    print()
+    seberang.add(perahu)
+    print(f"Seberang Sungai : {seberang}")
+    bawa = input("Adakah hewan yang ingin dibawa kembali? (y untuk membawa kembali) : ")
+    if bawa == "y":
+        perahu = input("Naikkan 1 hewan yang ingin dibawa kembali ke perahu : ")
+        seberang.remove(perahu)
+        if ("Serigala" in asal and len(asal) == 2) or ("Serigala" in seberang and len(seberang) == 2):
+            print("Yahh... Domba kamu dimakan Serigala :(")
+        else:
+            asal.add(perahu)
+            domba(asal,seberang)
+    print("\nKembali ke daerah asal...\n")
+    if len(seberang) == 3:
+        print("Selamat... Kamu Berhasil")
+    else:
+        if ("Serigala" in asal and len(asal) == 2) or ("Serigala" in seberang and len(seberang) == 2):
+            print("Yahh... Domba kamu dimakan Serigala :(")
+        else:
+            domba(asal,seberang)
 
-print('A :',graph['A'])
-print('B :',graph['B'])
-print('C :',graph['C'])
-print('D :',graph['D'])
-print('E :',graph['E'])
-print('F :',graph['F'])
-print('G :',graph['G'])
-print('H :',graph['H'])
-
-matrix_elements = sorted(graph.keys())
-cols = rows = len(matrix_elements)
-
-adjacency_matrix = [[0 for x in range(rows)] for y in range(cols)]
-edges_list = []
-
-for key in matrix_elements:
-    for neighbor in graph[key]:
-        edges_list.append((key, neighbor))
-
-for edge in edges_list:
-    index_of_first_vertex = matrix_elements.index(edge[0])
-    index_of_second_vertex = matrix_elements.index(edge[1])
-    adjacency_matrix[index_of_first_vertex][index_of_second_vertex] = 1
-
-print("\nAdjacency Matrix : ")
-for i in range(rows):
-    print(adjacency_matrix[i])
+asal = {"Serigala", "Domba 2", "Domba 1"}
+seberang = set()
+domba(asal,seberang)
